@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+dist/
+build/
+
+# System
+.DS_Store
+
+# Data
+*.csv
+*.json
+*.pcap
+
+# Database
+*.db
+*.db-journal
+
+# Node/Yarn/PNPM lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Python
+.coverage
+.pytest_cache/
+.mypy_cache/
+
+# IDE/Editor
+.idea/
+.history/
+.sass-cache/
+.cache/
+.pdm.toml
+.pdm.lock
+
+# IDE
+.vscode/
+*.code-workspace

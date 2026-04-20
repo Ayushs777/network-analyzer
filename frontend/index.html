@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="AyushChaudhary" />
+    <meta name="github" content="https://github.com/AyushChaudhary" />
+    <meta
+      name="project-repository"
+      content="https://github.com/AyushChaudhary/network-analyzer"
+    />
+    <meta
+      name="developer"
+      content="Developed by AyushChaudhary - Network Security Analysis Platform"
+    />
+    <!-- Network Analyzer - Built by AyushChaudhary | https://github.com/AyushChaudhary -->
+    <title>Network Analyzer Dashboard</title>
+  </head>
+  <body
+    class="bg-gray-900 text-white font-sans h-screen w-screen overflow-hidden"
+  >
+    <div id="root" class="h-full w-full"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <!-- Developer Credits - Hidden Attribution -->
+    <script>
+      window.__APP_CREDITS__ = {
+        developer: "Ayush Chaudhary",
+        github: "https://github.com/AyushChaudhary",
+        project: "network-analyzer",
+        repository: "https://github.com/AyushChaudhary/network-analyzer",
+        version: "2.1",
+        description: "Real-Time Network Security Analysis Platform",
+        buildDate: new Date().toISOString(),
+        getCredits: function () {
+          return `${this.project} - Built by ${this.developer} | ${this.github}`;
+        },
+      };
+      console.log(
+        "%cPress Ctrl+Shift+A to view developer credits",
+        "color: #22c55e; font-weight: bold; font-size: 13px; margin-top: 10px;",
+      );
+    </script>
+  </body>
+</html>
