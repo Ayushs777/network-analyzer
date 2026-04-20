@@ -24,8 +24,12 @@ from .api import routes
 from .websocket.manager import packet_manager, traffic_manager
 from .sniffer import PacketSniffer
 
-# Initialize tables
-Base.metadata.create_all(bind=engine)
+# Initialize tables — wrapped so DB failure doesn't crash Vercel on cold start
+try:
+    if engine is not None:
+        Base.metadata.create_all(bind=engine)
+except Exception as e:
+    logger.warning(f"Could not create DB tables (DB may be unreachable): {e}")
 
 # Security: Configure CORS from environment variables
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*").split(",")
