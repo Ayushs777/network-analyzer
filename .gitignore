@@ -20,9 +20,8 @@ build/
 # System
 .DS_Store
 
-# Data
+# Data (only ignore raw data files, NOT config files)
 *.csv
-*.json
 *.pcap
 
 # Database
