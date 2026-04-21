@@ -21,7 +21,7 @@ class PacketSniffer:
         self.traffic_manager = traffic_manager
         self.flow_analyzer = FlowAnalyzer(packet_manager)
         self.running = False
-        self.loop = asyncio.get_event_loop()
+        self.loop = None  # Will be captured lazily when start() is called inside the running event loop
         
         self.config = {
             "status": "stopped",
@@ -47,13 +47,20 @@ class PacketSniffer:
         # Performance: Batch Queue for DB
         self.db_queue = Queue(maxsize=50000)
         
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('10.255.255.255', 1))
-            self.local_ip = s.getsockname()[0]
-            s.close()
-        except:
-            self.local_ip = '127.0.0.1'
+        # Interface selection: Manual override or Auto-detection
+        self.local_ip = os.getenv("INTERFACE_IP")
+        if not self.local_ip:
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                s.connect(('10.255.255.255', 1))
+                self.local_ip = s.getsockname()[0]
+                s.close()
+                logger.info(f"Auto-detected interface IP: {self.local_ip}")
+            except:
+                self.local_ip = '127.0.0.1'
+                logger.warning("Could not auto-detect interface. Falling back to localhost.")
+        else:
+            logger.info(f"Using manual interface IP: {self.local_ip}")
 
     def update_config(self, new_config):
         if "status" in new_config:
@@ -69,6 +76,13 @@ class PacketSniffer:
         self.running = True
         self.config["status"] = "running"
         
+        # Capture the running event loop NOW — we are inside lifespan which runs inside uvicorn's loop
+        try:
+            self.loop = asyncio.get_running_loop()
+        except RuntimeError:
+            self.loop = asyncio.new_event_loop()
+            logger.warning("No running event loop found; created a new one for sniffer threads.")
+
         # Start DB Batch Worker
         self.db_thread = threading.Thread(target=self._db_batch_worker)
         self.db_thread.daemon = True
@@ -177,7 +191,7 @@ class PacketSniffer:
             alert = models.Alert(
                 level="High" if protocol != "TCP" else "Medium",
                 description=f"Security Alert: {protocol} Activity Spike",
-                details=f"Engine detected a massive volume of {count} {protocol} packets. Potential DDoS or scanning activity.",
+                details={"message": f"Engine detected a massive volume of {count} {protocol} packets. Potential DDoS or scanning activity.", "protocol": protocol, "count": count},
                 source_ip="Network Analysis Node",
                 timestamp=datetime.now()
             )

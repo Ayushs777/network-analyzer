@@ -1,0 +1,72 @@
+============================================================
+   NETVIZ COMMAND CENTER — PC SETUP INSTRUCTIONS
+============================================================
+
+PREREQUISITES (install these BEFORE running SETUP_AND_RUN.bat)
+──────────────────────────────────────────────────────────────
+
+1. PYTHON 3.10 or higher
+   Download: https://www.python.org/downloads/
+   IMPORTANT: Check "Add Python to PATH" during install!
+
+2. NODE.JS v18 or higher  
+   Download: https://nodejs.org/en/download/
+   npm is bundled with Node.js automatically.
+
+3. NPCAP (for live packet capture on Windows)
+   Download: https://npcap.com/#download
+   - Required for Scapy raw socket sniffing
+   - Install with "WinPcap API-compatible mode" checked
+   - Without this, the app falls back to demo mode automatically
+
+──────────────────────────────────────────────────────────────
+HOW TO RUN ON A NEW PC
+──────────────────────────────────────────────────────────────
+
+Step 1: Copy the entire "network-analyzer" folder to this PC
+
+Step 2: Right-click SETUP_AND_RUN.bat → "Run as administrator"
+        (Admin rights are needed for live network packet capture)
+
+Step 3: Wait for setup to complete (3-5 min on first run)
+        The browser will open automatically when ready.
+
+Step 4: Next time, just run START.bat (faster, skips installs)
+
+──────────────────────────────────────────────────────────────
+SERVICE URLS
+──────────────────────────────────────────────────────────────
+
+  Frontend Dashboard : http://localhost:5173
+  Backend API        : http://localhost:8000
+  API Documentation  : http://localhost:8000/api/docs
+
+──────────────────────────────────────────────────────────────
+LOGIN CREDENTIALS (default)
+──────────────────────────────────────────────────────────────
+
+  Username : admin
+  Password : password
+
+──────────────────────────────────────────────────────────────
+TROUBLESHOOTING
+──────────────────────────────────────────────────────────────
+
+Problem : "python is not recognized"
+Fix     : Reinstall Python and check "Add Python to PATH"
+
+Problem : "npm is not recognized"
+Fix     : Reinstall Node.js from nodejs.org
+
+Problem : Backend window closes immediately
+Fix     : Run as Administrator, check Python is 3.10+
+
+Problem : No live traffic shown (only demo data)
+Fix     : Install Npcap from npcap.com and run as Administrator
+
+Problem : Port already in use (8000 or 5173)
+Fix     : Kill the conflicting process:
+          netstat -ano | findstr :8000
+          taskkill /PID <pid> /F
+
+──────────────────────────────────────────────────────────────

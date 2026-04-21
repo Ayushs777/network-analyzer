@@ -24,7 +24,7 @@ from .api import routes
 from .websocket.manager import packet_manager, traffic_manager
 from .sniffer import PacketSniffer
 
-# Initialize tables — wrapped so DB failure doesn't crash Vercel on cold start
+# Initialize tables — wrapped in try/except for robustness
 try:
     if engine is not None:
         Base.metadata.create_all(bind=engine)

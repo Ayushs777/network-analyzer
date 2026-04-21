@@ -19,7 +19,7 @@ class AlertSystem:
             ).order_by(models.Alert.timestamp.desc()).first()
 
             if recent_alert:
-                time_diff = (datetime.utcnow() - recent_alert.timestamp).total_seconds()
+                time_diff = (datetime.now() - recent_alert.timestamp).total_seconds()
                 if time_diff < 60: # Limit similar alerts to 1 per minute
                     return
             

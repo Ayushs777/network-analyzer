@@ -2,7 +2,6 @@ fastapi
 uvicorn
 gunicorn
 sqlalchemy
-psycopg2-binary
 websockets
 scapy
 scikit-learn
@@ -13,7 +12,6 @@ alembic
 requests
 pydantic
 pydantic-settings
-asyncpg
 reportlab
 python-jose[cryptography]
 passlib[bcrypt]

@@ -44,7 +44,7 @@ class AlertBase(BaseModel):
     level: str
     description: str
     source_ip: str
-    details: Dict[str, Any]
+    details: Optional[Dict[str, Any]] = None
 
 class AlertSchema(AlertBase):
     id: int
